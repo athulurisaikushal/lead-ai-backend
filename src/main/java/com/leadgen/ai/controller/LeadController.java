@@ -8,7 +8,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "http://localhost:3000")   // ✅ ADD THIS LINE
+@CrossOrigin(origins = "*")   // ✅ allow all (fix for Vercel + local)
 public class LeadController {
 
     @Autowired
