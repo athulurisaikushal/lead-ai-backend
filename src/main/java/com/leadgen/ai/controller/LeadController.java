@@ -1,18 +1,21 @@
 package com.leadgen.ai.controller;
 
 import com.leadgen.ai.service.LeadAnalysisService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*")   // ✅ allow all (fix for Vercel + local)
+@CrossOrigin(origins = "*")
 public class LeadController {
 
-    @Autowired
-    private LeadAnalysisService service;
+    private final LeadAnalysisService service;
+
+    // ✅ constructor injection
+    public LeadController(LeadAnalysisService service) {
+        this.service = service;
+    }
 
     @GetMapping("/test")
     public String test() {
