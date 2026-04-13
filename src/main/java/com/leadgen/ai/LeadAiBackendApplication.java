@@ -2,8 +2,7 @@ package com.leadgen.ai;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @SpringBootApplication
 public class LeadAiBackendApplication {
@@ -13,12 +12,13 @@ public class LeadAiBackendApplication {
 	}
 }
 
-// 🔥 ADD THIS BELOW (VERY IMPORTANT)
+// 🔥 FORCE CONTROLLER HERE (INSIDE SAME FILE)
 @RestController
+@RequestMapping("/api")
 class TestController {
 
-	@GetMapping("/ping")
-	public String ping() {
-		return "pong";
+	@GetMapping("/test")
+	public String test() {
+		return "Backend working 🚀";
 	}
 }
