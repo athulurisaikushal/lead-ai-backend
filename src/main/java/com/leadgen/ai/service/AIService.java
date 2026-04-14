@@ -1,5 +1,8 @@
 package com.leadgen.ai.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -14,6 +17,9 @@ public class AIService {
     private String apiKey;
 
     private final WebClient webClient = WebClient.create("https://api.openai.com");
+
+    // ✅ Add this
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public String generateReply(String message) {
 
@@ -34,9 +40,19 @@ public class AIService {
                     .bodyToMono(String.class)
                     .block();
 
-            return response;
+            // ✅ Parse JSON
+            JsonNode jsonNode = mapper.readTree(response);
+
+            // ✅ Extract only AI text
+            return jsonNode
+                    .get("choices")
+                    .get(0)
+                    .get("message")
+                    .get("content")
+                    .asText();
 
         } catch (Exception e) {
+            e.printStackTrace();
             return "⚠️ AI service error";
         }
     }
